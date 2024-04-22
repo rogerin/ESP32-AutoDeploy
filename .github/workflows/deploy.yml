@@ -41,6 +41,10 @@ jobs:
           echo "IDF_PATH=$IDF_PATH" >> $GITHUB_ENV
           echo "PATH=$PATH" >> $GITHUB_ENV
 
+      - name: Run export.sh
+        run: |
+          ${{ env.ESP_IDF }}/export.sh
+
       - name: Open project files
         run: |
           cd src
@@ -48,6 +52,11 @@ jobs:
       - name: Install Python dependencies
         run: |
           pip3 install setuptools wheel click pyyaml
+        shell: bash
+      
+      - name: Install additional Python dependencies
+        run: |
+          pip3 install esp-idf-monitor
         shell: bash
       
       - name: Build project
