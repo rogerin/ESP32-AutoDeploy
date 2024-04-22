@@ -44,16 +44,7 @@ jobs:
       - name: Set execute permission for export.sh
         run: |
           chmod +x ${{ env.ESP_IDF }}/export.sh
-      
-      - name: Run export.sh
-        run: |
-          . ${{ env.ESP_IDF }}/export.sh
-        shell: bash
 
-      - name: Open project files
-        run: |
-          cd src
-      
       - name: Install Python dependencies
         run: |
           pip3 install setuptools wheel click pyyaml
@@ -63,6 +54,16 @@ jobs:
         run: |
           pip3 install esp-idf-monitor
         shell: bash
+        
+      - name: Run export.sh
+        run: |
+          . ${{ env.ESP_IDF }}/export.sh
+        shell: bash
+
+      - name: Open project files
+        run: |
+          cd src
+    
       
       - name: Build project
         run: |
