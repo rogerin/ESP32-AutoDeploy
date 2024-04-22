@@ -47,7 +47,8 @@ jobs:
       
       - name: Run export.sh
         run: |
-          ${{ env.ESP_IDF }}/export.sh
+          . ${{ env.ESP_IDF }}/export.sh
+        shell: bash
 
       - name: Open project files
         run: |
