@@ -26,6 +26,14 @@ jobs:
         with:
           python-version: 3.7
 
+      - name: Install additional Python dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          pip3 install -r $GITHUB_WORKSPACE/esp-idf/requirements.txt
+          pip3 install setuptools wheel click pyyaml
+          pip3 install esp-idf-monitor
+        shell: bash
+        
       - name: Clone ESP-IDF
         run: |
           git clone --recursive https://github.com/espressif/esp-idf.git
@@ -34,8 +42,6 @@ jobs:
       - name: Install ESP-IDF tools
         run: |
           ${{ env.ESP_IDF }}/install.sh
-
-
 
       - name: Export ESP-IDF environment variables
         run: |
@@ -46,20 +52,6 @@ jobs:
       - name: Set execute permission for export.sh
         run: |
           chmod +x ${{ env.ESP_IDF }}/export.sh
-
-      - name: Install Python dependencies
-        run: |
-          python3 -m pip install --upgrade pip
-          pip3 install -r $GITHUB_WORKSPACE/esp-idf/requirements.txt
-          pip3 install setuptools wheel click pyyaml
-        shell: bash
-      
-      - name: Install additional Python dependencies
-        run: |
-          pip3 install esp-idf-monitor
-          pip3 install -r  ${{ env.ESP_IDF }}/requirements.txt
-        shell: bash
-
     
       - name: Run export.sh
         run: |
@@ -70,7 +62,6 @@ jobs:
         run: |
           cd src
     
-      
       - name: Build project
         run: |
           idf.py build
@@ -78,7 +69,6 @@ jobs:
       - name: Install esptool
         run: |
           echo "Install esptool"
-          # python -m pip install --upgrade pip
           pip3 install esptool
 
       - name: Extract Version from config.json
