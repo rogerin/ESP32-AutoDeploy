@@ -35,6 +35,8 @@ jobs:
         run: |
           ${{ env.ESP_IDF }}/install.sh
 
+
+
       - name: Export ESP-IDF environment variables
         run: |
           source ${{ env.ESP_IDF }}/export.sh
@@ -47,6 +49,8 @@ jobs:
 
       - name: Install Python dependencies
         run: |
+          python3 -m pip3 install --upgrade pip3
+          pip3 install -r $GITHUB_WORKSPACE/esp-idf/requirements.txt
           pip3 install setuptools wheel click pyyaml
         shell: bash
       
@@ -57,7 +61,6 @@ jobs:
         shell: bash
 
     
-
       - name: Run export.sh
         run: |
           . ${{ env.ESP_IDF }}/export.sh
