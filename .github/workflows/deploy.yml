@@ -41,6 +41,10 @@ jobs:
           echo "IDF_PATH=$IDF_PATH" >> $GITHUB_ENV
           echo "PATH=$PATH" >> $GITHUB_ENV
 
+      - name: Set execute permission for export.sh
+        run: |
+          chmod +x ${{ env.ESP_IDF }}/export.sh
+      
       - name: Run export.sh
         run: |
           ${{ env.ESP_IDF }}/export.sh
