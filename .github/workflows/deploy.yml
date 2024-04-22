@@ -53,7 +53,7 @@ jobs:
       - name: Install additional Python dependencies
         run: |
           pip3 install esp-idf-monitor
-          pip3 install -r $GITHUB_WORKSPACE/esp-idf/requirements.txt
+          pip3 install -r  ${{ env.ESP_IDF }}/requirements.txt
         shell: bash
 
     
