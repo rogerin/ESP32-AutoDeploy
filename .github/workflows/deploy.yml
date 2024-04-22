@@ -40,13 +40,8 @@ jobs:
 
       - name: Install ESP-IDF tools
         run: |
-          ${{ env.ESP_IDF }}/install.sh
-
-      - name: Export ESP-IDF environment variables
-        run: |
-          source ${{ env.ESP_IDF }}/export.sh
-          echo "IDF_PATH=$IDF_PATH" >> $GITHUB_ENV
-          echo "PATH=$PATH" >> $GITHUB_ENV
+          . ${{ env.ESP_IDF }}/install.sh
+        shell: bash
 
       - name: Set execute permission for export.sh
         run: |
@@ -63,7 +58,7 @@ jobs:
     
       - name: Build project
         run: |
-          idf.py app
+          idf.py build
 
       - name: Install esptool
         run: |
