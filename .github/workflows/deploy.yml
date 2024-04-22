@@ -44,7 +44,13 @@ jobs:
       - name: Open project files
         run: |
           cd src
-
+      
+      - name: Install Python dependencies
+        run: |
+          pip3 setuptools wheel
+          pip3 install click pyyaml
+        shell: bash
+      
       - name: Build project
         run: |
           idf.py build
