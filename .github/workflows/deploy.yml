@@ -1,0 +1,57 @@
+name: Build and Deploy Firmware
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install esptool
+        run: |
+          echo "Install esptool"
+          # python -m pip install --upgrade pip
+          # pip install esptool
+
+      - name: Extract Version from config.json
+        id: config
+        run: |
+          echo "Extracting version..."
+          VERSION=$(cat config.json | grep version | cut -d '"' -f 4)
+          echo "::set-output name=version::$VERSION"
+
+      - name: Create firmware binary
+        run: |
+          # Simulate building process (replace this with your actual build command) 
+          #  esptool.py --chip esp32 elf2image --output my_firmware.bin
+          echo "Building firmware for version ${{ steps.config.outputs.version }}"
+          touch esp32-autodeploy-${{ steps.config.outputs.version }}.bin
+
+
+      - name: Upload firmware to /firmware directory
+        run: |
+          echo "Upload to /firmware"
+          mkdir -p firmware
+          mv esp32-autodeploy-${{ steps.config.outputs.version }}.bin firmware/
+      
+      - name: Commit firmware binary
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add firmware/
+          git commit -m "Deploy firmware version ${{ steps.config.outputs.version }}"
+          git push
