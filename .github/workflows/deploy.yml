@@ -29,7 +29,6 @@ jobs:
       - name: Install additional Python dependencies
         run: |
           python3 -m pip install --upgrade pip
-          pip3 install -r $GITHUB_WORKSPACE/esp-idf/requirements.txt
           pip3 install setuptools wheel click pyyaml
           pip3 install esp-idf-monitor
         shell: bash
