@@ -24,8 +24,8 @@ jobs:
       - name: Install esptool
         run: |
           echo "Install esptool"
-          # python -m pip install --upgrade pip
-          # pip install esptool
+          python -m pip install --upgrade pip
+          pip install esptool
 
       - name: Extract Version from config.json
         id: config
@@ -36,10 +36,9 @@ jobs:
 
       - name: Create firmware binary
         run: |
-          # Simulate building process (replace this with your actual build command) 
-          #  esptool.py --chip esp32 elf2image --output my_firmware.bin
           echo "Building firmware for version ${{ steps.config.outputs.version }}"
-          touch esp32-autodeploy-${{ steps.config.outputs.version }}.bin
+          esptool.py --chip esp32 elf2image --output esp32-autodeploy-${{ steps.config.outputs.version }}.bin
+          # simulate: touch esp32-autodeploy-${{ steps.config.outputs.version }}.bin
 
 
       - name: Upload firmware to /firmware directory
