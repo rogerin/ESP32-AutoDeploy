@@ -37,7 +37,7 @@ jobs:
       - name: Create firmware binary
         run: |
           echo "Building firmware for version ${{ steps.config.outputs.version }}"
-          esptool.py --chip esp32 elf2image --output esp32-autodeploy-${{ steps.config.outputs.version }}.bin
+          esptool --chip esp32 elf2image --output esp32-autodeploy-${{ steps.config.outputs.version }}.bin
           # simulate: touch esp32-autodeploy-${{ steps.config.outputs.version }}.bin
 
 
